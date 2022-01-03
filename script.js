@@ -2,8 +2,8 @@ console.log("Corona Virus Status in India")
 const india = document.getElementById('india')
 const tbody = document.getElementById('tbody')
 const footer = document.getElementById('footer')
+const updated = document.getElementById('updated')
 function fetchData() {
-    // fetch('data.json')
     fetch('https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST')
         .then((response) => {
             return response.json();
@@ -21,9 +21,9 @@ function fetchData() {
                 <h5 class="text-warning">Total Cases : ${data.totalCases}</h5>
                 `
 
-        for (element of data.regionData) {
-            // console.log(element)
-            tbody.innerHTML += `
+            for (element of data.regionData) {
+                // console.log(element)
+                tbody.innerHTML += `
                 <tr>
                     <td class="text-dark">${element.region}</td>
                     <td class="text-primary">${element.activeCases}</td>
@@ -35,12 +35,16 @@ function fetchData() {
                     <td class="text-warning">${element.totalInfected}</td>
                 </tr>
                 `
-        }
+            }
             footer.innerHTML = `
-                <h6 id="source" class="me-5">Data Source : <a href='${data.sourceUrl}'>${data.sourceUrl}</a></h6>
-                <h6 id="credit" class="ms-5">Created By : <a href='https://shivanshu-tech18.github.io/' target="_blank">Shivanshu Karn</a></    h6>            
+                <h6 id="source">Data Source : <a href='${data.sourceUrl}'>${data.sourceUrl}</a></h6>
+                <h6 id="credit">Created By : <a href='https://shivanshu-tech18.github.io/' target="_blank">Shivanshu Karn</a></    h6>            
                 `
 
+                var ddd = new Date(data.lastUpdatedAtApify);
+                // console.log(ddd.toLocaleString('en-US', { hour12: true }))
+                updated.innerHTML = `Last Updated : <span class="text-uppercase">${ddd.toLocaleString('en-IN', { hour12: true })}</span>`
+                
         })
 }
 
